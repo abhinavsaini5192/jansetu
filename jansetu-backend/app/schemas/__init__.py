@@ -1,0 +1,227 @@
+"""
+Pydantic Schemas Package.
+Re-exports common, user, authentication, organization, challenge,
+validation, notification, audit, and institutional collaboration schemas.
+"""
+from app.schemas.auth import TokenResponse, UserLoginRequest, UserRegisterRequest
+from app.schemas.common import (
+    ApiResponse,
+    DatabaseStatus,
+    HealthResponse,
+    PaginatedResponse,
+    PaginationMetadata,
+    SystemStatusData,
+)
+from app.schemas.challenge import (
+    ChallengeCreateRequest,
+    ChallengeDetailResponse,
+    ChallengeListItemResponse,
+    ChallengeLocation,
+    ChallengeResponse,
+    ChallengeStatusResponse,
+    ChallengeUpdateRequest,
+)
+from app.schemas.attachment import AttachmentListResponse, AttachmentResponse
+from app.schemas.audit_log import AuditLogListResponse, AuditLogResponse
+from app.schemas.dashboard import (
+    DashboardDistrictSummaryResponse,
+    DashboardDomainSummaryResponse,
+    DashboardOverviewResponse,
+    DistrictCountItem,
+    DomainCountItem,
+    RecentActivityItem,
+)
+from app.schemas.government import (
+    GovernmentDecisionRequest,
+    GovernmentReviewHistoryResponse,
+    GovernmentReviewResponse,
+)
+from app.schemas.notification import (
+    NotificationListResponse,
+    NotificationResponse,
+    UnreadCountResponse,
+)
+from app.schemas.organization import (
+    OrganizationCreateRequest,
+    OrganizationListResponse,
+    OrganizationMemberListResponse,
+    OrganizationMembershipCreateRequest,
+    OrganizationMembershipResponse,
+    OrganizationMembershipUpdateRequest,
+    OrganizationResponse,
+    OrganizationUpdateRequest,
+)
+from app.schemas.user import UserBase, UserResponse
+from app.schemas.university import (
+    UniversityCreate,
+    UniversityProfileCreate,
+    UniversityProfileResponse,
+    UniversityProfileUpdate,
+    UniversityResponse,
+    UniversityUpdate,
+    UniversityVerificationUpdate,
+)
+from app.schemas.department import (
+    CapabilityCreate,
+    CapabilityResponse,
+    DepartmentCapabilityLink,
+    DepartmentCreate,
+    DepartmentResponse,
+    DepartmentUpdate,
+)
+from app.schemas.matching import (
+    ExplainableFactor,
+    MatchingResponse,
+    UniversityMatchResult,
+)
+from app.schemas.assignment import (
+    AssignmentAcceptRequest,
+    AssignmentCancelRequest,
+    AssignmentCreate,
+    AssignmentDeclineRequest,
+    AssignmentResponse,
+)
+from app.schemas.project import (
+    ProjectCreate,
+    ProjectResponse,
+    ProjectUpdate,
+)
+from app.schemas.team import (
+    TeamCreate,
+    TeamMemberAdd,
+    TeamMemberResponse,
+    TeamMemberUpdate,
+    TeamResponse,
+    TeamUpdate,
+)
+from app.schemas.proposal import (
+    ProposalCreate,
+    ProposalHistoryItem,
+    ProposalResponse,
+    ProposalReviewRequest,
+    ProposalUpdate,
+)
+from app.schemas.milestone import (
+    DeliverableCreate,
+    DeliverableResponse,
+    DeliverableReviewRequest,
+    DeliverableUpdate,
+    MilestoneCreate,
+    MilestoneResponse,
+    MilestoneStatusUpdate,
+    MilestoneUpdate,
+)
+from app.schemas.partner import (
+    PartnerInviteRequest,
+    PartnerResponse,
+    PartnerResponseRequest,
+    SupportOfferCreate,
+    SupportOfferResponse,
+    SupportOfferUpdate,
+)
+from app.schemas.risk import (
+    RiskCreate,
+    RiskResolveRequest,
+    RiskResponse,
+    RiskUpdate,
+)
+from app.schemas.activity import ActivityResponse
+
+__all__ = [
+    "ApiResponse",
+    "HealthResponse",
+    "DatabaseStatus",
+    "SystemStatusData",
+    "PaginationMetadata",
+    "PaginatedResponse",
+    "UserBase",
+    "UserResponse",
+    "UserRegisterRequest",
+    "UserLoginRequest",
+    "TokenResponse",
+    "OrganizationCreateRequest",
+    "OrganizationUpdateRequest",
+    "OrganizationResponse",
+    "OrganizationListResponse",
+    "OrganizationMembershipCreateRequest",
+    "OrganizationMembershipUpdateRequest",
+    "OrganizationMembershipResponse",
+    "OrganizationMemberListResponse",
+    "ChallengeLocation",
+    "ChallengeCreateRequest",
+    "ChallengeUpdateRequest",
+    "ChallengeResponse",
+    "ChallengeListItemResponse",
+    "ChallengeDetailResponse",
+    "ChallengeStatusResponse",
+    "AttachmentResponse",
+    "AttachmentListResponse",
+    "GovernmentDecisionRequest",
+    "GovernmentReviewResponse",
+    "GovernmentReviewHistoryResponse",
+    "NotificationResponse",
+    "NotificationListResponse",
+    "UnreadCountResponse",
+    "AuditLogResponse",
+    "AuditLogListResponse",
+    "DashboardOverviewResponse",
+    "DashboardDistrictSummaryResponse",
+    "DashboardDomainSummaryResponse",
+    "DistrictCountItem",
+    "DomainCountItem",
+    "RecentActivityItem",
+    "UniversityCreate",
+    "UniversityUpdate",
+    "UniversityResponse",
+    "UniversityProfileCreate",
+    "UniversityProfileUpdate",
+    "UniversityProfileResponse",
+    "UniversityVerificationUpdate",
+    "DepartmentCreate",
+    "DepartmentUpdate",
+    "DepartmentResponse",
+    "CapabilityCreate",
+    "CapabilityResponse",
+    "DepartmentCapabilityLink",
+    "ExplainableFactor",
+    "UniversityMatchResult",
+    "MatchingResponse",
+    "AssignmentCreate",
+    "AssignmentResponse",
+    "AssignmentAcceptRequest",
+    "AssignmentDeclineRequest",
+    "AssignmentCancelRequest",
+    "ProjectCreate",
+    "ProjectUpdate",
+    "ProjectResponse",
+    "TeamCreate",
+    "TeamUpdate",
+    "TeamResponse",
+    "TeamMemberAdd",
+    "TeamMemberUpdate",
+    "TeamMemberResponse",
+    "ProposalCreate",
+    "ProposalUpdate",
+    "ProposalReviewRequest",
+    "ProposalResponse",
+    "ProposalHistoryItem",
+    "MilestoneCreate",
+    "MilestoneUpdate",
+    "MilestoneStatusUpdate",
+    "MilestoneResponse",
+    "DeliverableCreate",
+    "DeliverableUpdate",
+    "DeliverableReviewRequest",
+    "DeliverableResponse",
+    "PartnerInviteRequest",
+    "PartnerResponseRequest",
+    "PartnerResponse",
+    "SupportOfferCreate",
+    "SupportOfferUpdate",
+    "SupportOfferResponse",
+    "RiskCreate",
+    "RiskUpdate",
+    "RiskResolveRequest",
+    "RiskResponse",
+    "ActivityResponse",
+]
