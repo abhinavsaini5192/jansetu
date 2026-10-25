@@ -48,23 +48,26 @@ export const IndustryCollaboration = () => {
     <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
       
       {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 glass-panel p-6 rounded-3xl border border-purple-500/30">
-        <div>
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-5 saas-panel p-6 sm:p-8 rounded-3xl relative overflow-hidden">
+        <div className="space-y-2">
           <div className="flex items-center space-x-2">
-            <Badge variant="purple">Screen 07 • Industry & CSR Collaboration</Badge>
-            <span className="text-xs text-slate-400">Public-Private-Academic Alliance</span>
+            <span className="saas-badge bg-purple-500/10 text-purple-300 border-purple-500/30">
+              <span className="w-1.5 h-1.5 rounded-full bg-purple-400 animate-pulse"></span>
+              INDUSTRY & CSR ALLIANCE
+            </span>
+            <span className="text-xs text-slate-400 font-mono">Public-Private-Academic Co-Funding</span>
           </div>
-          <h1 className="text-2xl sm:text-3xl font-bold text-white mt-1 font-display">
+          <h1 className="text-2xl sm:text-3xl font-black text-white font-display tracking-tight">
             Industry Co-Funding, Hardware & Field Testing
           </h1>
-          <p className="text-xs text-slate-400 mt-1 max-w-xl">
+          <p className="text-xs sm:text-sm text-slate-300 max-w-xl leading-relaxed">
             Bridge academic prototypes with corporate CSR grants, specialized edge hardware, and commercial scale-up networks.
           </p>
         </div>
 
         <button
           onClick={handleProceedToLifecycle}
-          className="px-5 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs flex items-center space-x-2 shadow-glow-sm"
+          className="btn-saas-primary px-5 py-2.5 rounded-xl text-xs font-bold flex items-center space-x-2 shrink-0"
         >
           <span>Track Lifecycle Milestones</span>
           <ArrowRight className="w-4 h-4" />
@@ -94,29 +97,34 @@ export const IndustryCollaboration = () => {
           {partners.map((ind) => (
             <div 
               key={ind.id}
-              className="glass-card rounded-3xl p-6 sm:p-8 border border-navy-750 bg-navy-900/80 hover:border-purple-500/40 transition-all"
+              className="saas-card rounded-2xl p-6 sm:p-8 border border-white/[0.08] relative overflow-hidden transition-all group"
             >
+              {/* Specular Purple Top Accent Line */}
+              <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-purple-500 via-indigo-500 to-pink-500" />
+
               <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6">
                 
                 <div className="space-y-3">
                   <div className="flex flex-wrap items-center gap-2">
-                    <Badge variant="purple">CSR / Industry Partner</Badge>
+                    <Badge variant="purple" dot={true}>CSR / Industry Partner</Badge>
                     {ind.headquarters && (
-                      <span className="text-xs text-slate-400 font-mono">HQ: {ind.headquarters}</span>
+                      <span className="text-[11px] text-slate-400 font-mono bg-black/40 px-2 py-0.5 rounded-md border border-white/[0.06]">
+                        HQ: {ind.headquarters}
+                      </span>
                     )}
                     {ind.matchScore !== undefined && (
-                      <span className="text-xs text-emerald-400 font-bold">{ind.matchScore}% Domain Fit</span>
+                      <span className="text-xs text-emerald-400 font-bold font-mono">{ind.matchScore}% Domain Fit</span>
                     )}
                   </div>
 
-                  <h3 className="text-xl font-bold text-white font-display">
+                  <h3 className="text-xl font-bold text-white group-hover:text-purple-300 transition-colors font-display">
                     {ind.name}
                   </h3>
 
                   {Array.isArray(ind.focusAreas) && ind.focusAreas.length > 0 && (
                     <div className="flex flex-wrap gap-1.5">
                       {ind.focusAreas.map((f, idx) => (
-                        <span key={idx} className="text-[11px] px-2.5 py-0.5 rounded-full bg-navy-800 text-slate-300 border border-navy-700">
+                        <span key={idx} className="text-[11px] px-2.5 py-0.5 rounded-full bg-white/[0.04] text-slate-300 border border-white/[0.06]">
                           {f}
                         </span>
                       ))}
@@ -126,12 +134,12 @@ export const IndustryCollaboration = () => {
                   {/* Offered Support Chips */}
                   {Array.isArray(ind.offeredSupport) && ind.offeredSupport.length > 0 && (
                     <div className="pt-2 space-y-2">
-                      <span className="text-xs font-semibold text-slate-300 block">Committed Support Offerings:</span>
+                      <span className="text-xs font-semibold text-slate-300 block uppercase tracking-wider">Committed Support Offerings:</span>
                       <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs">
                         {ind.offeredSupport.map((sup, idx) => (
-                          <div key={idx} className="p-3 rounded-xl bg-navy-850 border border-navy-750 space-y-1">
-                            <strong className="text-purple-400 block text-[11px] uppercase tracking-wider">{sup.type || "Support"}</strong>
-                            <p className="text-slate-300 text-[11px]">{sup.details || sup}</p>
+                          <div key={idx} className="p-3.5 rounded-xl saas-card space-y-1">
+                            <strong className="text-purple-400 block text-[11px] uppercase tracking-wider font-semibold">{sup.type || "Support"}</strong>
+                            <p className="text-slate-300 text-[11px] leading-relaxed">{sup.details || sup}</p>
                           </div>
                         ))}
                       </div>
@@ -140,9 +148,9 @@ export const IndustryCollaboration = () => {
 
                   {/* Mentor details */}
                   {ind.mentor && (
-                    <div className="p-3.5 rounded-xl bg-navy-850/80 border border-navy-700 flex items-center space-x-3 text-xs">
-                      <div className="p-2 rounded-lg bg-purple-500/10 text-purple-400">
-                        <UserCheck className="w-5 h-5" />
+                    <div className="p-3.5 rounded-xl saas-card flex items-center space-x-3 text-xs">
+                      <div className="p-2 rounded-lg bg-purple-500/15 border border-purple-500/25 text-purple-300">
+                        <UserCheck className="w-4 h-4" />
                       </div>
                       <div>
                         <p className="text-slate-200 font-semibold">Assigned Mentor: {ind.mentor.name}</p>
@@ -154,11 +162,11 @@ export const IndustryCollaboration = () => {
                 </div>
 
                 {/* Right Action Column */}
-                <div className="flex flex-col items-start lg:items-end justify-between gap-4 shrink-0 pt-4 lg:pt-0 border-t lg:border-t-0 border-navy-800">
+                <div className="flex flex-col items-start lg:items-end justify-between gap-4 shrink-0 pt-4 lg:pt-0 border-t lg:border-t-0 border-white/[0.08]">
                   <button
                     onClick={() => handleAttach(ind)}
                     disabled={attachingId === ind.id}
-                    className="w-full sm:w-auto px-6 py-3 rounded-xl bg-purple-600 hover:bg-purple-500 text-white font-bold text-xs flex items-center justify-center space-x-2 shadow-glow-sm transition-transform hover:scale-105 disabled:opacity-50"
+                    className="w-full sm:w-auto px-6 py-3 rounded-xl btn-saas-purple text-xs font-bold flex items-center justify-center space-x-2 disabled:opacity-50"
                   >
                     {attachingId === ind.id ? (
                       <>

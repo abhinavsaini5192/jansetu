@@ -21,8 +21,8 @@ import {
 
 export const ProjectLifecycle = () => {
   const { activeChallengeId, activeProjectId, showToast } = useJanSetu();
-  const identifier = activeProjectId || activeChallengeId;
-  const isChallenge = !activeProjectId;
+  const identifier = activeProjectId || activeChallengeId || 'proj-jalkavach-01';
+  const isChallenge = Boolean(activeChallengeId && !activeProjectId);
 
   const { project, loading, error, updateMilestone, refetch } = useProject(identifier, isChallenge);
   const navigate = useNavigate();
@@ -94,26 +94,29 @@ export const ProjectLifecycle = () => {
   }
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8 animate-in fade-in">
       
       {/* Top Banner */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 glass-panel p-6 rounded-3xl border border-blue-500/30">
-        <div>
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-5 saas-panel p-6 sm:p-8 rounded-3xl relative overflow-hidden">
+        <div className="space-y-2">
           <div className="flex items-center space-x-2">
-            <Badge variant="primary">Screen 08 • Project Lifecycle & Risk Intelligence</Badge>
+            <span className="saas-badge bg-blue-500/10 text-blue-300 border-blue-500/30">
+              <span className="w-1.5 h-1.5 rounded-full bg-blue-400 animate-pulse"></span>
+              PROJECT LIFECYCLE & RISK MONITOR
+            </span>
             <span className="text-xs text-slate-400 font-mono">{project.code || project.id}</span>
           </div>
-          <h1 className="text-2xl sm:text-3xl font-bold text-white mt-1 font-display">
+          <h1 className="text-2xl sm:text-3xl font-black text-white font-display tracking-tight">
             Milestone Tracking & Execution Roadmap
           </h1>
-          <p className="text-xs text-slate-400 mt-1 max-w-2xl">
+          <p className="text-xs sm:text-sm text-slate-300 max-w-2xl leading-relaxed">
             Monitor real-world prototype progress, task completion, and automated risk alerts throughout the innovation cycle.
           </p>
         </div>
 
         <button
           onClick={handleProceedToImpact}
-          className="px-5 py-2.5 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-400 hover:from-emerald-400 hover:to-teal-300 text-slate-950 font-black text-xs flex items-center space-x-2 shadow-glow-emerald"
+          className="btn-saas-teal px-5 py-2.5 rounded-xl text-xs font-bold flex items-center space-x-2 shrink-0"
         >
           <span>Evidence-Based Impact Dashboard</span>
           <ArrowRight className="w-4 h-4" />
@@ -130,16 +133,16 @@ export const ProjectLifecycle = () => {
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         
         {/* Col 1 & 2: Interactive Milestones */}
-        <div className="lg:col-span-2 glass-card rounded-3xl p-6 border border-navy-700 space-y-4">
-          <div className="flex items-center justify-between border-b border-navy-700 pb-3">
+        <div className="lg:col-span-2 saas-panel rounded-3xl p-6 sm:p-7 border border-white/[0.1] space-y-5">
+          <div className="flex items-center justify-between border-b border-white/[0.08] pb-3.5">
             <div>
-              <h3 className="text-sm font-bold text-white uppercase tracking-wider">
+              <h3 className="text-xs font-bold text-slate-300 uppercase tracking-wider">
                 Project Milestones ({project.milestones?.length || 0})
               </h3>
-              <p className="text-xs text-slate-400">Mark completed milestones as deliverables are verified</p>
+              <p className="text-xs text-slate-400">Mark completed milestones as deliverables are verified on-ground</p>
             </div>
             {project.progressPercentage !== undefined && (
-              <Badge variant="teal">Overall: {project.progressPercentage}%</Badge>
+              <Badge variant="teal" dot={true}>Overall: {project.progressPercentage}%</Badge>
             )}
           </div>
 
@@ -155,28 +158,28 @@ export const ProjectLifecycle = () => {
                 return (
                   <div 
                     key={m.id}
-                    className={`p-4 rounded-2xl border transition-all flex flex-col sm:flex-row sm:items-center justify-between gap-4 ${
+                    className={`p-4 rounded-xl border transition-all flex flex-col sm:flex-row sm:items-center justify-between gap-4 ${
                       isDone 
-                        ? 'bg-navy-850/60 border-emerald-500/20' 
-                        : 'bg-navy-850 border-navy-700'
+                        ? 'bg-emerald-950/20 border-emerald-500/30' 
+                        : 'saas-card'
                     }`}
                   >
                     <div className="space-y-1">
                       <div className="flex items-center space-x-2">
-                        <span className="text-xs font-mono font-bold text-amber-400">{m.id}</span>
+                        <span className="text-xs font-mono font-bold text-amber-300 bg-black/40 px-2 py-0.5 rounded border border-white/[0.06]">{m.id}</span>
                         <h4 className="text-xs font-bold text-white">{m.title}</h4>
                         {isDone ? (
-                          <span className="text-[10px] px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-300 font-bold">
+                          <span className="text-[10px] px-2 py-0.5 rounded-md bg-emerald-500/20 text-emerald-300 font-bold border border-emerald-500/30">
                             Complete ✓
                           </span>
                         ) : (
-                          <span className="text-[10px] px-2 py-0.5 rounded bg-blue-500/20 text-blue-300 font-bold">
+                          <span className="text-[10px] px-2 py-0.5 rounded-md bg-blue-500/20 text-blue-300 font-bold border border-blue-500/30">
                             {m.progress ? `${m.progress}%` : "Pending"}
                           </span>
                         )}
                       </div>
                       {m.dueDate && (
-                        <p className="text-[11px] text-slate-400">Target Date: {m.dueDate}</p>
+                        <p className="text-[11px] text-slate-400 font-mono">Target Date: {m.dueDate}</p>
                       )}
                     </div>
 
@@ -184,7 +187,7 @@ export const ProjectLifecycle = () => {
                       <button
                         onClick={() => handleMilestoneComplete(m.id)}
                         disabled={updatingMilestoneId === m.id}
-                        className="px-3.5 py-1.5 rounded-xl bg-blue-600 hover:bg-blue-500 text-white text-xs font-bold flex items-center space-x-1.5 shrink-0 transition-all disabled:opacity-50"
+                        className="px-3.5 py-1.5 rounded-xl btn-saas-primary text-xs font-bold flex items-center space-x-1.5 shrink-0 transition-all disabled:opacity-50"
                       >
                         {updatingMilestoneId === m.id ? (
                           <Loader2 className="w-3.5 h-3.5 animate-spin" />
@@ -203,22 +206,22 @@ export const ProjectLifecycle = () => {
 
         {/* Col 3: AI Risk & Alerts */}
         <div className="space-y-6">
-          <div className="glass-card rounded-3xl p-6 border border-navy-700 space-y-4">
-            <h3 className="text-xs font-bold uppercase tracking-wider text-slate-200 flex items-center space-x-2 border-b border-navy-800 pb-3">
+          <div className="saas-panel rounded-3xl p-6 border border-white/[0.1] space-y-4">
+            <h3 className="text-xs font-bold uppercase tracking-wider text-slate-200 flex items-center space-x-2 border-b border-white/[0.08] pb-3">
               <AlertTriangle className="w-4 h-4 text-amber-400" />
               <span>Project Risk Intelligence</span>
             </h3>
 
             {!Array.isArray(project.risks) || project.risks.length === 0 ? (
-              <p className="text-xs text-slate-400 py-4 leading-relaxed">
+              <p className="text-xs text-slate-400 py-4 leading-relaxed font-normal">
                 No active schedule risks or seasonal bottlenecks flagged for this project.
               </p>
             ) : (
               <div className="space-y-3">
                 {project.risks.map((risk, idx) => (
-                  <div key={idx} className="p-3.5 rounded-2xl bg-navy-850 border border-amber-500/30 space-y-1">
+                  <div key={idx} className="p-3.5 rounded-xl saas-card border-amber-500/30 space-y-1">
                     <span className="text-xs font-bold text-amber-300 block">{risk.title || "Seasonal Delay Alert"}</span>
-                    <p className="text-[11px] text-slate-300 leading-relaxed">{risk.description || risk}</p>
+                    <p className="text-[11px] text-slate-300 leading-relaxed font-normal">{risk.description || risk}</p>
                   </div>
                 ))}
               </div>
