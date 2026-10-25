@@ -1,6 +1,7 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import { authService } from '../services/authService';
 import { USER_ROLES } from '../config/constants';
+import { isOfficialUser, DEMO_PRESETS, OFFICIAL_PRESETS } from '../utils/roleUtils';
 
 const AuthContext = createContext();
 
@@ -50,6 +51,32 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
+  const register = async (userData) => {
+    setIsLoading(true);
+    try {
+      const data = await authService.register(userData);
+      setUser(data.user);
+      setToken(data.token);
+      setActiveRole("CITIZEN");
+      return data;
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const loginPreset = async (presetId) => {
+    setIsLoading(true);
+    try {
+      const data = await authService.loginPreset(presetId);
+      setUser(data.user);
+      setToken(data.token);
+      setActiveRole(data.user?.role || "CITIZEN");
+      return data;
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   const logout = async () => {
     setIsLoading(true);
     try {
@@ -62,7 +89,6 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
-  // Switch role function allows switching views in system without hardcoding identity
   const switchRole = (roleId) => {
     setActiveRole(roleId);
     if (user) {
@@ -70,16 +96,25 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
+  const isOfficial = isOfficialUser(user, activeRole);
+  const isPublic = !isOfficial;
+
   return (
     <AuthContext.Provider value={{
       user,
       token,
       isAuthenticated: Boolean(token && user),
+      isOfficial,
+      isPublic,
       activeRole,
       switchRole,
       roles: USER_ROLES,
+      demoPresets: DEMO_PRESETS,
+      officialPresets: OFFICIAL_PRESETS,
       isLoading,
       login,
+      register,
+      loginPreset,
       logout,
     }}>
       {children}
