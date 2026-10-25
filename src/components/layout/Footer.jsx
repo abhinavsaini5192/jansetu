@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Shield, Sparkles, Building2, Award } from 'lucide-react';
+import logoImg from '../../assets/logo-white.png';
 
 export const Footer = () => {
   return (
@@ -9,9 +10,9 @@ export const Footer = () => {
         
         {/* Col 1: Platform identity */}
         <div className="space-y-3 md:col-span-1">
-          <div className="flex items-center space-x-2">
-            <div className="w-8 h-8 rounded-lg bg-gradient-to-tr from-blue-600 to-teal-400 flex items-center justify-center">
-              <span className="text-sm font-bold text-white">JS</span>
+          <div className="flex items-center space-x-2.5">
+            <div className="w-8 h-8 rounded-lg bg-saas-card/90 border border-white/[0.12] p-1 flex items-center justify-center">
+              <img src={logoImg} alt="JanSetu" className="w-full h-full object-contain filter drop-shadow-[0_0_4px_rgba(255,255,255,0.4)]" />
             </div>
             <span className="text-lg font-bold text-white font-display tracking-tight">JanSetu</span>
           </div>
@@ -42,15 +43,16 @@ export const Footer = () => {
         <div className="space-y-3">
           <h4 className="text-xs font-bold text-slate-200 uppercase tracking-wider flex items-center space-x-1.5">
             <Sparkles className="w-3.5 h-3.5 text-teal-400" />
-            <span>Innovation OS</span>
+            <span>Platform Pipeline</span>
           </h4>
           <ul className="text-xs space-y-1.5 text-slate-400">
-            <li><Link to="/citizen-portal" className="hover:text-white transition-colors">1. Citizen Challenge Crowdsourcing</Link></li>
-            <li><Link to="/ai-intelligence" className="hover:text-white transition-colors">2. Semantic AI Clustering & Scoring</Link></li>
-            <li><Link to="/government-dashboard" className="hover:text-white transition-colors">3. Official Validation & Mandates</Link></li>
-            <li><Link to="/university-matching" className="hover:text-white transition-colors">4. Explainable HEI Matching Engine</Link></li>
-            <li><Link to="/industry-collaboration" className="hover:text-white transition-colors">5. CSR & Industry Tech Transfer</Link></li>
-            <li><Link to="/impact-dashboard" className="hover:text-white transition-colors">6. Verified Societal Impact</Link></li>
+            <li><Link to="/citizen-portal" className="hover:text-white transition-colors">1. Citizen Crowdsourcing (Public)</Link></li>
+            <li><Link to="/problems" className="hover:text-white transition-colors">2. Problem Statements (Public)</Link></li>
+            <li className="pt-1 text-[10px] uppercase font-bold text-slate-500 tracking-wider">Restricted Official Desks:</li>
+            <li><Link to="/government-dashboard" className="hover:text-amber-300 transition-colors flex items-center space-x-1"><span>3. Govt Validation Desk</span><span className="text-[10px]">🔐</span></Link></li>
+            <li><Link to="/ai-intelligence" className="hover:text-amber-300 transition-colors flex items-center space-x-1"><span>4. AI Semantic Triaging</span><span className="text-[10px]">🔐</span></Link></li>
+            <li><Link to="/university-matching" className="hover:text-amber-300 transition-colors flex items-center space-x-1"><span>5. HEI Matching & R&D</span><span className="text-[10px]">🔐</span></Link></li>
+            <li><Link to="/industry-collaboration" className="hover:text-amber-300 transition-colors flex items-center space-x-1"><span>6. CSR & Impact Audit</span><span className="text-[10px]">🔐</span></Link></li>
           </ul>
         </div>
 
