@@ -9,14 +9,14 @@ export const STAGES = LIFECYCLE_STAGES;
 export const JanSetuProvider = ({ children }) => {
   const [language, setLanguage] = useState('en'); // 'en' | 'hi'
   
-  // Selected challenge ID across workflow views (null if none selected)
+  // Selected challenge ID across workflow views (defaults to seed challenge if none selected)
   const [activeChallengeId, setActiveChallengeId] = useState(() => {
-    return localStorage.getItem('jansetu_active_challenge_id') || null;
+    return localStorage.getItem('jansetu_active_challenge_id') || 'c-arsenic-ranchi';
   });
 
-  // Selected project ID across workflow views
+  // Selected project ID across workflow views (defaults to seed project if none selected)
   const [activeProjectId, setActiveProjectId] = useState(() => {
-    return localStorage.getItem('jansetu_active_project_id') || null;
+    return localStorage.getItem('jansetu_active_project_id') || 'proj-jalkavach-01';
   });
 
   // Global toast messages
