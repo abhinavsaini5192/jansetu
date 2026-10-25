@@ -3,12 +3,14 @@ import { universityService } from '../services/universityService';
 
 export const useUniversityMatches = (challengeId) => {
   const [matches, setMatches] = useState([]);
+  const [adoptedBy, setAdoptedBy] = useState(null);
   const [loading, setLoading] = useState(Boolean(challengeId));
   const [error, setError] = useState(null);
 
   const fetchMatches = useCallback(async () => {
     if (!challengeId) {
       setMatches([]);
+      setAdoptedBy(null);
       setLoading(false);
       return;
     }
@@ -18,9 +20,11 @@ export const useUniversityMatches = (challengeId) => {
     try {
       const data = await universityService.getMatchesForChallenge(challengeId);
       setMatches(Array.isArray(data) ? data : (data?.matches || []));
+      setAdoptedBy(data?.adoptedBy || null);
     } catch (err) {
       setError(err.message || "Failed to load university recommendations.");
       setMatches([]);
+      setAdoptedBy(null);
     } finally {
       setLoading(false);
     }
@@ -30,12 +34,28 @@ export const useUniversityMatches = (challengeId) => {
     fetchMatches();
   }, [fetchMatches]);
 
-  const assign = async (universityId) => {
+  const adopt = async (universityId, proposalDetails = {}, currentUser = null) => {
     if (!challengeId || !universityId) return;
-    const res = await universityService.assignChallengeToUniversity(challengeId, universityId);
+    const res = await universityService.adoptChallenge(challengeId, universityId, proposalDetails, currentUser);
     await fetchMatches();
     return res;
   };
 
-  return { matches, loading, error, assignUniversity: assign, refetch: fetchMatches };
+  const invite = async (universityId, note = "") => {
+    if (!challengeId || !universityId) return;
+    const res = await universityService.sendRecommendationInvite(challengeId, universityId, note);
+    await fetchMatches();
+    return res;
+  };
+
+  return { 
+    matches, 
+    adoptedBy,
+    loading, 
+    error, 
+    adoptChallenge: adopt,
+    sendRecommendationInvite: invite,
+    assignUniversity: adopt, // backward compatibility
+    refetch: fetchMatches 
+  };
 };
