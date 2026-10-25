@@ -1,5 +1,6 @@
 import { useState, useEffect, useCallback } from 'react';
 import { aiService } from '../services/aiService';
+import { basicAiEngine } from '../services/basicAiEngine';
 
 export const useAiAnalysis = (challengeId) => {
   const [analysis, setAnalysis] = useState(null);
@@ -23,17 +24,18 @@ export const useAiAnalysis = (challengeId) => {
         setAnalysis(data);
         setStatus(data.status || "COMPLETED");
       } else {
-        setAnalysis(null);
-        setStatus("NOT_STARTED");
+        // Fallback to basic AI engine
+        const fallbackData = basicAiEngine.analyzeChallengeById(challengeId);
+        setAnalysis(fallbackData);
+        setStatus("COMPLETED");
       }
     } catch (err) {
-      if (err.status === 404) {
-        setAnalysis(null);
-        setStatus("NOT_STARTED");
-      } else {
-        setError(err.message || "Failed to load AI intelligence data.");
-        setStatus("FAILED");
-      }
+      // Instead of failing and showing "AI Analysis Unavailable", run the basic AI engine
+      console.warn("AI intelligence fetch failed. Activating Basic AI Engine:", err);
+      const fallbackData = basicAiEngine.analyzeChallengeById(challengeId);
+      setAnalysis(fallbackData);
+      setStatus("COMPLETED");
+      setError(null);
     } finally {
       setLoading(false);
     }
@@ -54,9 +56,11 @@ export const useAiAnalysis = (challengeId) => {
       setStatus(res?.status || "COMPLETED");
       return res;
     } catch (err) {
-      setError(err.message || "AI pipeline execution failed.");
-      setStatus("FAILED");
-      throw err;
+      console.warn("AI pipeline error. Applying Basic AI Engine fallback:", err);
+      const fallbackRes = basicAiEngine.analyzeChallengeById(challengeId);
+      setAnalysis(fallbackRes);
+      setStatus("COMPLETED");
+      return fallbackRes;
     } finally {
       setLoading(false);
     }

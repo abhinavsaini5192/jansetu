@@ -231,7 +231,7 @@ def delete_challenge(
 def get_challenge_ai_analysis(
     challenge_id: str,
     db: Session = Depends(get_db),
-    current_user: Optional[User] = Depends(require_authenticated_user),
+    current_user: Optional[User] = Depends(get_current_user_optional),
 ):
     from app.ai.service import ai_service
     return ai_service.analyze_challenge_by_id(db=db, challenge_id=challenge_id, current_user=current_user)
@@ -245,7 +245,7 @@ def get_challenge_ai_analysis(
 def trigger_challenge_ai_analysis(
     challenge_id: str,
     db: Session = Depends(get_db),
-    current_user: Optional[User] = Depends(require_authenticated_user),
+    current_user: Optional[User] = Depends(get_current_user_optional),
 ):
     from app.ai.service import ai_service
     return ai_service.analyze_challenge_by_id(db=db, challenge_id=challenge_id, current_user=current_user)
